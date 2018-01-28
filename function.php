@@ -117,6 +117,12 @@ function checkUserInDB($user_id, $text)
 
         $checkAnswer = 'Ваше последнее сообщение: ' . $user_message . ', отправленно: ' . $add_date;
 
+        $sql = 'UPDATE `telegramusers` SET `user_message` = :user_message WHERE `user_id` = :user_id';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id);
+        $stmt->bindValue(':user_message', mb_strtolower($text));
+        $stmt->execute();
+
         return $checkAnswer;
     }
 }
